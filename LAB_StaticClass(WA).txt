@@ -1,0 +1,178 @@
+import java.util.*;
+import java.math.BigInteger;
+
+class Account {
+    private String id = "000";
+    private String name;
+    private int balance;
+    private static String autoIncrease = "000";
+
+    Account(String name, int balance) {
+        autoIncrease = addBigIntegers(autoIncrease, "1");
+        this.id = autoIncrease;
+        this.name = name;
+        this.balance = balance;
+    }
+
+    public static void reset() {
+        Account.autoIncrease = "000";
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public String toString(String s) {
+        return s.toString();
+    }
+
+    public static String addBigIntegers(String big1, String big2) {
+        BigInteger a = new BigInteger(big1);
+        BigInteger b = new BigInteger(big2);
+
+        String result = String.format("%03d", a.add(b));
+        return result;
+    }
+}
+
+class Main {
+    public static boolean isNumeric(String str) {
+        if (str == null || str.equals("")) {
+            return false;
+        }
+        try {
+            int i = Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException err) {
+            // System.out.println("Can not parsed to Integer");
+            return false;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int tc = sc.nextInt();
+        sc.nextLine();
+
+        for (int t = 0; t < tc; t++) {
+            String initAcc = sc.nextLine();
+
+            List<String> arrName = new ArrayList<String>();
+            List<Integer> arrBalance = new ArrayList<Integer>();
+            List<Integer> arrSpacesAcc = new ArrayList<Integer>();
+
+            arrSpacesAcc.add(1);
+            for (int i = 2; i < initAcc.length(); i++) {
+                if (initAcc.charAt(i) == ' ') {
+                    if (isNumeric(String.valueOf(initAcc.charAt(i - 1)))
+                            && Character.isAlphabetic(initAcc.charAt(i + 1))
+                            || isNumeric(String.valueOf(initAcc.charAt(i + 1)))
+                            && Character.isAlphabetic(initAcc.charAt(i - 1))) {
+                        arrSpacesAcc.add(i);
+                    }
+                }
+            }
+
+            for (int i = 0; i < arrSpacesAcc.size() - 1; i += 2) {
+                arrName.add(initAcc.substring(arrSpacesAcc.get(i) + 1, arrSpacesAcc.get(i + 1)));
+            }
+
+            for (int i = 1; i < arrSpacesAcc.size() - 1; i += 2) {
+                arrBalance.add(Integer.parseInt(initAcc.substring(arrSpacesAcc.get(i) + 1, arrSpacesAcc.get(i + 1))));
+            }
+            arrBalance.add(Integer
+                    .parseInt(initAcc.substring(arrSpacesAcc.get(arrSpacesAcc.size() - 1) + 1, initAcc.length())));
+
+            List<Account> acc = new ArrayList<Account>();
+            for (int i = 0; i < arrName.size(); i++) {
+                acc.add(new Account(arrName.get(i), arrBalance.get(i)));
+            }
+
+            //////////////////////////////////////
+            String process = sc.nextLine();
+            List<String> arrProcess = new ArrayList<String>();
+
+            String subPro[] = process.split(" ");
+
+            for (int i = 0; i < subPro.length; i++) {
+                if (subPro[i].equals("nap") || subPro[i].equals("rut") || subPro[i].equals("chuyen")) {
+                    arrProcess.add(subPro[i]); // Get order of process
+                }
+            }
+
+            List<Integer> arrSpacesMid2Pro = new ArrayList<Integer>();
+            for (int i = 2; i < process.length(); i++) {
+                if (process.charAt(i) == ' ') {
+                    if (isNumeric(String.valueOf(process.charAt(i - 1)))
+                            && Character.isAlphabetic(process.charAt(i + 1))) {
+                        arrSpacesMid2Pro.add(i);
+                    }
+                }
+            }
+
+            List<String> exchange = new ArrayList<String>();
+            exchange.add(process.substring(2, arrSpacesMid2Pro.get(0)));
+
+            for (int i = 0; i < arrSpacesMid2Pro.size() - 1; i++) {
+                exchange.add(process.substring(arrSpacesMid2Pro.get(i) + 1, arrSpacesMid2Pro.get(i + 1)));
+            }
+
+            exchange.add(process.substring(arrSpacesMid2Pro.get(arrSpacesMid2Pro.size() - 1) + 1, process.length()));
+
+            for (int p = 0; p < arrProcess.size(); p++) {
+                if (arrProcess.get(p).equals("nap")) {
+                    for (int i = 0; i < acc.size(); i++) {
+                        if (acc.get(i).getId().equals(exchange.get(p).substring(4, 7))) {
+                            acc.get(i).setBalance(acc.get(i).getBalance()
+                                    + Integer.parseInt(exchange.get(p).substring(8, exchange.get(p).length())));
+                        }
+                    }
+                }
+                if (arrProcess.get(p).equals("rut")) {
+                    for (int i = 0; i < acc.size(); i++) {
+                        if (acc.get(i).getId().equals(exchange.get(p).substring(4, 7))) {
+                            acc.get(i).setBalance(acc.get(i).getBalance()
+                                    - Integer.parseInt(exchange.get(p).substring(8, exchange.get(p).length())));
+                        }
+                    }
+                }
+                if (arrProcess.get(p).equals("chuyen")) {
+                    for (int i = 0; i < acc.size(); i++) {
+                        if (acc.get(i).getId().equals(exchange.get(p).substring(7, 10))) {
+                            acc.get(i).setBalance(acc.get(i).getBalance()
+                                    - Integer.parseInt(exchange.get(p).substring(15, exchange.get(p).length())));
+                        }
+                        if (acc.get(i).getId().equals(exchange.get(p).substring(11, 14))) {
+                            acc.get(i).setBalance(acc.get(i).getBalance()
+                                    + Integer.parseInt(exchange.get(p).substring(15, exchange.get(p).length())));
+                        }
+                    }
+                }
+            }
+
+            for (Account a : acc) {
+                System.out.print("[" + a.getId() + ", " + a.getName() + ", " + a.getBalance() + "]");
+            }
+
+            System.out.println("");
+            Account.reset();
+        }
+    }
+}

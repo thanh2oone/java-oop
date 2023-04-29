@@ -1,0 +1,74 @@
+import java.util.*;
+
+class ListNum {
+    private ArrayList<String> num;
+
+    public ListNum(ArrayList<String> num) {
+        this.num = num;
+    }
+
+    public String getMidItem() {
+        String result = "";
+
+        if (this.num.size() == 1)
+            result = num.get(0);
+        if (this.num.size() % 2 == 0) {
+            String subMid1 = this.num.get(this.num.size() / 2 - 1);
+            String subMid2 = this.num.get(this.num.size() / 2);
+
+            Character lastSubMid1 = subMid1.charAt(subMid1.length() - 1);
+            Character lastSubMid2 = subMid2.charAt(subMid2.length() - 1);
+
+            String resSubMid1 = subMid1, resSubMid2 = subMid2;
+
+            if (lastSubMid1 == 'f') {
+                resSubMid1 = subMid1.substring(0, subMid1.length() - 1);
+            }
+            if (lastSubMid2 == 'f') {
+                resSubMid2 = subMid2.substring(0, subMid2.length() - 1);
+            }
+
+            result = resSubMid1 + " " + resSubMid2;
+
+        } else {
+            String mid = this.num.get(this.num.size() / 2);
+            Character lastMid = mid.charAt(mid.length() - 1);
+
+            if (lastMid == 'f') {
+                result = mid.substring(0, mid.length() - 1);
+            } else {
+                result = mid;
+            }
+        }
+        
+        return result;
+    }
+
+    public String toString() {
+        return getMidItem().toString();
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int tc = sc.nextInt();
+        sc.nextLine();
+
+        for (int t = 0; t < tc; t++) {
+            String in = sc.nextLine();
+
+            String sub[] = in.split(" ");
+
+            ArrayList<String> num = new ArrayList<>();
+
+            for (String s : sub) {
+                num.add(s);
+            }
+
+            ListNum ln = new ListNum(num);
+            System.out.println(ln.toString());
+        }
+    }
+}

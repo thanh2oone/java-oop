@@ -1,0 +1,181 @@
+import java.util.*;
+
+class Point {
+    private int x;
+    private int y;
+
+    public Point() {
+    }
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public String toString() {
+        return "Point: (" + x + "," + y + ")";
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setXY(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Line {
+    private Point p1;
+    private Point p2;
+
+    Line(Point p1, Point p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+    }
+
+    Line(int x1, int y1, int x2, int y2) {
+        this.p1 = new Point(x1, x1);
+        this.p2 = new Point(x2, y2);
+    }
+
+    public Point getP1() {
+        return p1;
+    }
+
+    public void setP1(Point p1) {
+        this.p1 = p1;
+    }
+
+    public Point getP2() {
+        return p2;
+    }
+
+    public void setP2(Point p2) {
+        this.p2 = p2;
+    }
+
+    public void setP12(Point p1, Point p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+    }
+
+    public double getLength() {
+        return Math.sqrt(Math.pow(Math.abs(this.p1.getX() - this.p2.getX()), 2) + Math.pow(Math.abs(this.p1.getY() - this.p2.getY()), 2));
+    }
+
+    public double getDoDoc() {
+        return Math.atan2(Math.abs(p1.getY() - p2.getY()), Math.abs(p1.getX() - p2.getX()));
+    }
+}
+
+class LineSub extends Point {
+    private Point p1;
+    private Point p2;
+
+    public LineSub(Point p1, Point p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+    }
+
+    public LineSub(int x1, int y1, int x2, int y2) {
+        this.p1 = new Point(x1, y1);
+        this.p2 = new Point(x2, y2);
+    }
+
+    public Point getP1() {
+        return p1;
+    }
+
+    public void setP1(Point p1) {
+        this.p1 = p1;
+    }
+
+    public Point getP2() {
+        return p2;
+    }
+
+    public void setP2(Point p2) {
+        this.p2 = p2;
+    }
+
+    public double getLength() {
+        return Math.sqrt(Math.pow(Math.abs(this.p1.getX() - this.p2.getX()), 2) + Math.pow(Math.abs(this.p1.getY() - this.p2.getY()), 2));
+    }
+
+    public double getDoDoc() {
+        return Math.atan2(Math.abs(p1.getY() - p2.getY()), Math.abs(p1.getX() - p2.getX()));
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int tc = sc.nextInt();
+        sc.nextLine();
+
+        for (int t = 0; t < tc; t++) {
+            String in = sc.nextLine();
+
+            String options[] = in.split(" ");
+
+            int p1X = Integer.parseInt(options[1]);
+            int p1Y = Integer.parseInt(options[2]);
+            int p2X = Integer.parseInt(options[3]);
+            int p2Y = Integer.parseInt(options[4]);
+
+            String result = "";
+
+            if (options[0].equals("CPoint")) {
+                Line ln = new Line(new Point(p1X, p1Y), new Point(p2X, p2Y));
+                result = "Line[Point[" + ln.getP1().getX() + ", " + ln.getP1().getY() + "], Point[" + ln.getP2().getX()
+                        + ", " + ln.getP2().getY() + "]]";
+            }
+
+            if (options[0].equals("Cint")) {
+                Line ln = new Line(p1X, p1Y, p2X, p2Y);
+                result = "Line[[" + ln.getP1().getX() + ", " + ln.getP1().getY() + "], [" + ln.getP2().getX()
+                        + ", " + ln.getP2().getY() + "]]";
+            }
+
+            if (options[0].equals("IPoint")) {
+                LineSub lns = new LineSub(new Point(p1X, p1Y), new Point(p2X, p2Y));
+                result = "Line[Point[" + lns.getP1().getX() + ", " + lns.getP1().getY() + "], Point["
+                        + lns.getP2().getX()
+                        + ", " + lns.getP2().getY() + "]]";
+            }
+
+            if (options[0].equals("Iint")) {
+                LineSub lns = new LineSub(p1X, p1Y, p2X, p2Y);
+                result = "Line[[" + lns.getP1().getX() + ", " + lns.getP1().getY() + "], [" + lns.getP2().getX()
+                        + ", " + lns.getP2().getY() + "]]";
+            }
+
+            if (options[0].equals("LEN")) {
+                Line ln = new Line(p1X, p1Y, p2X, p2Y);
+                result = String.format("%.2f", ln.getLength());
+            }
+
+            if (options[0].equals("GRA")) {
+                Line ln = new Line(p1X, p1Y, p2X, p2Y);
+                result = String.format("%.2f", ln.getDoDoc());
+            }
+
+            System.out.println(result);
+        }
+    }
+}

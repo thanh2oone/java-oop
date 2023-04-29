@@ -1,0 +1,66 @@
+import java.util.*;
+
+class FlightBooking {
+    private String flightId;
+    private int userId;
+    private static int seatAvailable = 180;
+
+    FlightBooking() {
+
+    };
+
+    FlightBooking(String flightId) {
+        this.flightId = flightId;
+    }
+
+    public void setSeatAvailable(int seatAvailable) {
+        FlightBooking.seatAvailable = seatAvailable;
+    }
+
+    public int getSeatAvailable() {
+        return seatAvailable;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int tc = sc.nextInt();
+        sc.nextLine();
+
+        for (int t = 0; t < tc; t++) {
+            String in = sc.nextLine();
+            
+            FlightBooking fb = new FlightBooking();
+            
+            List<String> arrID = new ArrayList<String>();
+            List<String> arrProcess = new ArrayList<String>();
+
+            String sub[] = in.split(" ");
+
+            for (int i = 0; i < sub.length - 1; i++) {
+                arrID.add(sub[i]);
+                arrProcess.add(sub[i + 1]);
+            }
+
+            for (int i = 0; i < arrProcess.size(); i++) {
+                if (arrProcess.get(i).equals("Booking")) {
+                    fb.setSeatAvailable(fb.getSeatAvailable() - 1);
+                    System.out.print("[Seat Available: " + fb.getSeatAvailable() + "]");
+                }
+                else if (arrProcess.get(i).equals("Confirmed")) {
+                    System.out.print(
+                            "--User " + arrID.get(i) + " Confirmed--[Seat Available: " + fb.getSeatAvailable() + "]");
+                }
+                else if (arrProcess.get(i).equals("Cancel")) {
+                    fb.setSeatAvailable(fb.getSeatAvailable() + 1);
+                    System.out.print(
+                            "[Seat Available: " + fb.getSeatAvailable() + "]");
+                }
+            }
+            System.out.println("");
+            fb.setSeatAvailable(180);
+        }
+    }
+}

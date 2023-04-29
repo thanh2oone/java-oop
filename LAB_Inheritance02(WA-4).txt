@@ -1,0 +1,77 @@
+import java.util.*;
+
+class Circle {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public double getArea() {
+        return 3.14 * radius * radius;
+    }
+
+    public String toString() {
+        return "Circle[radius=" + radius + ", area=" + String.format("%.1f", getArea()) + "]";
+    }
+}
+
+class Cylinder extends Circle {
+    private double height = 1.0;
+
+    public Cylinder(double radius, double height) {
+        super(radius);
+        this.height = height;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public double getArea() {
+        return 2 * 3.14 * getRadius() * height + 2 * super.getArea();
+    }
+
+    public String toString() {
+        return "Cylinder[radius=" + getRadius() + ", height=" + height + ", area="
+                + String.format("%.1f", getArea()) + "]";
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int tc = sc.nextInt();
+        sc.nextLine();
+
+        for (int t = 0; t < tc; t++) {
+            String in = sc.nextLine();
+            String typeShape[] = in.split(" ");
+
+            if (typeShape[0].equals("Ci")) {
+                Circle ci = new Circle(Double.parseDouble(typeShape[1]));
+
+                System.out.println(ci.toString());
+            }
+
+            if (typeShape[0].equals("Cy")) {
+                Cylinder cy = new Cylinder(Double.parseDouble(typeShape[1]), Double.parseDouble(typeShape[2]));
+
+                System.out.println(cy.toString());
+            }
+        }
+    }
+}

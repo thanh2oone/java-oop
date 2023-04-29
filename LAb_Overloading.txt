@@ -1,0 +1,74 @@
+import java.util.*;
+
+class Circle {
+    private double r;
+    private String color;
+
+    Circle() {
+        this.r = 1.0;
+        this.color = "red";
+    }
+
+    Circle(double r) {
+        this.r = r;
+        this.color = "red";
+    }
+
+    Circle(double r, String color) {
+        this.r = r;
+        this.color = color;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public double getR() {
+        return r;
+    }
+
+    public void setR(double r) {
+        this.r = r;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int tc = sc.nextInt();
+        sc.nextLine();
+
+        for (int t = 0; t < tc; t++) {
+            String in = sc.nextLine();
+
+            Circle c;
+            int index = 0;
+            for (int i = 0; i < in.length(); i++) {
+                if (in.charAt(i) == ' ') {
+                    index = i;
+                    break;
+                }
+            }
+            if (index != 0) {
+                String sub1 = in.substring(0, index);
+                String sub2 = in.substring(index + 1, in.length());
+                c = new Circle(Double.parseDouble(sub1), sub2);
+            }
+            else {
+                if (in.equals("-1")) {
+                    c = new Circle();
+                }
+                else {
+                    c = new Circle(Double.parseDouble(in));
+                }
+            }
+
+            System.out.println(c.getR() + " " + c.getColor());
+        }
+    }
+}

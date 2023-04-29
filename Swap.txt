@@ -1,0 +1,44 @@
+import java.util.*;
+
+class Swap {
+    private int n;
+
+    Swap(int n) {
+        this.n = n;
+    }
+
+    public void setNum(int n) {
+        this.n = n;
+    }
+
+    public int getNum() {
+        return n;
+    }
+
+    public static void swap(Swap x, Swap y) {
+        int temp = x.getNum();
+        x.setNum(y.getNum());
+        y.setNum(temp);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int tc = sc.nextInt();
+        sc.nextLine();
+
+        for (int t = 0; t < tc; t++) {
+            String in = sc.nextLine();
+
+            String sub[] = in.split(" ");
+
+            Swap x = new Swap(Integer.parseInt(sub[0]));
+            Swap y = new Swap(Integer.parseInt(sub[1]));
+
+            Swap.swap(x, y);
+
+            System.out.println(x.getNum() + " " + y.getNum());
+        }
+    }
+}

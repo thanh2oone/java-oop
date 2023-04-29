@@ -1,0 +1,102 @@
+import java.util.*;
+import java.math.BigInteger;
+
+class User {
+    private String id = "000000";
+    private String email;
+    private static String autoIncrease = "000000";
+
+    User() {
+        autoIncrease = addBigIntegers(autoIncrease, "1");
+        this.id = autoIncrease;
+        System.out.println(this.id + " " + this.email);
+    }
+
+    User(String email) {
+        this.email = email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public static String addBigIntegers(String big1, String big2) {
+        BigInteger a = new BigInteger(big1);
+        BigInteger b = new BigInteger(big2);
+
+        String result = String.format("%06d", a.add(b));
+        return result;
+    }
+}
+
+public class Main {
+    public static boolean isNumeric(String str) {
+        if (str == null || str.equals("")) {
+            return false;
+        }
+        try {
+            int i = Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException err) {
+            // System.out.println("Can not parsed to Integer");
+            return false;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int tc = sc.nextInt();
+        sc.nextLine();
+
+        List<User> user = new ArrayList<User>();
+        for (int t = 0; t < tc; t++) {
+            String in = sc.nextLine();
+
+            if (in.compareTo("C") == 0) {
+                user.add(new User());
+            } else if (isNumeric(in)) {
+                for (int i = 0; i < user.size(); i++) {
+                    if (user.get(i).getId().equals(String.format("%06d", Integer.parseInt(in)))) {
+                        System.out.println(user.get(i).getId() + " " + user.get(i).getEmail());
+                    }
+                }
+            } else {
+                int index1 = 0, index2 = 0;
+                for (int i = 0; i < in.length(); i++) {
+                    if (in.charAt(i) == ' ') {
+                        index1 = i;
+                        for (int j = i + 1; j < in.length(); j++) {
+                            if (in.charAt(j) == ' ') {
+                                index2 = j;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                String sub1 = in.substring(0, index1);
+                String sub2 = in.substring(index1 + 1, index2);
+                String sub3 = in.substring(index2 + 1, in.length());
+
+                if (sub1.equals("Set")) {
+                    for (int i = 0; i < user.size(); i++) {
+                        if (user.get(i).getId().equals(String.format("%06d", Integer.parseInt(sub2)))) {
+                            user.get(i).setEmail(sub3);
+                            System.out.println(user.get(i).getId() + " " + user.get(i).getEmail());
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

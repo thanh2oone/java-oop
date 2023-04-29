@@ -1,0 +1,36 @@
+import java.util.*;
+import java.math.BigInteger;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int tc = sc.nextInt();
+        sc.nextLine();
+
+        for (int t = 0; t < tc; t++) {
+            String in = sc.nextLine();
+
+            String sub[] = in.split(" ");
+
+            BigInteger big1 = new BigInteger(sub[0]);
+            BigInteger big2 = new BigInteger(sub[2]);
+
+            BigInteger res = null;
+            
+            switch (sub[1]) {
+                case "+":
+                    res = big1.add(big2);
+                    break;
+                case "-":
+                    res = big1.subtract(big2);
+                    break;
+                case "*":
+                    res = big1.multiply(big2);
+                    break;
+            }
+
+            System.out.println(res);
+        }
+    }
+}

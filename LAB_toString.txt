@@ -1,0 +1,73 @@
+import java.util.*;
+import java.lang.Math;
+
+class Circle {
+    private double r = 1.0;
+
+    Circle() {
+    }
+
+    Circle(double r) {
+        this.r = r;
+    }
+
+    public void setR(double r) {
+        this.r = r;
+    }
+
+    public double getR() {
+        return r;
+    }
+
+    public double getArea() {
+        return Double.valueOf(String.format("%.3f", Math.PI * Math.pow(this.r, 2)));
+    }
+
+    public double getCircumference() {
+        return 2 * Math.PI * this.r;
+    }
+
+    public String toString() {
+        return String.valueOf(String.format("%.3f", this.r));
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int tc = sc.nextInt();
+        sc.nextLine();
+
+        for (int t = 0; t < tc; t++) {
+            String in = sc.nextLine();
+
+            String sub[] = in.split(" ");
+
+            if (sub.length == 2) {
+                if (sub[1].equals("get")) {
+                    Circle c = new Circle(Double.parseDouble(sub[0]));
+
+                    System.out.println(String.format("%.3f", c.getR()));
+                } else if (sub[1].equals("A")) {
+                    Circle c = new Circle(Double.parseDouble(sub[0]));
+
+                    System.out.println(Double.valueOf(String.format("%.3f", c.getArea())));
+                } else if (sub[1].equals("C")) {
+                    Circle c = new Circle(Double.parseDouble(sub[0]));
+
+                    System.out.println(Double.valueOf(String.format("%.3f", c.getCircumference())));
+                } else if (sub[1].equals("S")) {
+                    Circle c = new Circle(Double.parseDouble(sub[0]));
+
+                    System.out.println("Call explicitly: Circle[radius=" + String.format("%.3f", c.getR()) + "]");
+                    System.out.println("Call implicitly: Circle[radius=" + c.toString() + "]");
+                }
+            } else if (sub.length == 3) {
+                Circle c = new Circle();
+                c.setR(Double.parseDouble(sub[2]));
+                System.out.println("Circle[radius=" + String.format("%.3f",c.getR()) + "]");
+            }
+        }
+    }
+}

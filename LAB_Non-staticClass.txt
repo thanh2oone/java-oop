@@ -1,0 +1,13 @@
+class Main {
+    class SinhVien {
+        public String id = "DCVT099";
+        public String name = "Nguyen Nam";
+    }
+
+    public static void main(String[] args) {
+        Main m = new Main(); // Create outer object
+        Main.SinhVien sv = m.new SinhVien(); // Create inner object with outer object
+        
+        System.out.print(sv.id + " " + sv.name);
+    }
+}

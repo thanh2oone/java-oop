@@ -1,0 +1,65 @@
+import java.util.*;
+
+class Date {
+    public short day;
+    public short month;
+    public short year;
+    public static int number_of_date = 0;
+
+    Date() {
+        this.day = 1;
+        this.month = 1;
+        this.year = 2023;
+    }
+
+    Date(short day, short month, short year) {
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int tc = sc.nextInt();
+        sc.nextLine();
+
+        for (int t = 0; t < tc; t++) {
+            String in = sc.nextLine();
+
+            if (in.equals("C")) {
+                Date d = new Date();
+                System.out.println("0" + d.day + "/0" + d.month + "/" + d.year + " " + Date.number_of_date);
+            } else {
+                String sub[] = in.split(" ");
+
+                short shtDay = Short.parseShort(sub[0]);
+                short shtMonth = Short.parseShort(sub[1]);
+                short shtYear = Short.parseShort(sub[2]);
+
+                Date d = new Date(shtDay, shtMonth, shtYear);
+
+                String sDay = "", sMonth = "";
+
+                if (d.day == 5 || d.day == 20) Date.number_of_date++;
+
+                if (d.day < 10) {
+                    sDay = "0" + d.day;
+                } else {
+                    sDay = String.valueOf(d.day);
+                }
+
+                if (d.month < 10) {
+                    sMonth = "0" + d.month;
+                } else {
+                    sMonth = String.valueOf(d.month);
+                }
+
+
+                System.out.println(sDay + "/" + sMonth + "/" + d.year + " " + Date.number_of_date);
+            }
+        }
+    }
+}
