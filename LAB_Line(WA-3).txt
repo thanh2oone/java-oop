@@ -48,7 +48,7 @@ class Line {
     }
 
     Line(int x1, int y1, int x2, int y2) {
-        this.p1 = new Point(x1, x1);
+        this.p1 = new Point(x1, y1);
         this.p2 = new Point(x2, y2);
     }
 
@@ -74,7 +74,8 @@ class Line {
     }
 
     public double getLength() {
-        return Math.sqrt(Math.pow(Math.abs(this.p1.getX() - this.p2.getX()), 2) + Math.pow(Math.abs(this.p1.getY() - this.p2.getY()), 2));
+        return Math.sqrt(Math.pow(Math.abs(this.p1.getX() - this.p2.getX()), 2)
+                + Math.pow(Math.abs(this.p1.getY() - this.p2.getY()), 2));
     }
 
     public double getDoDoc() {
@@ -113,7 +114,8 @@ class LineSub extends Point {
     }
 
     public double getLength() {
-        return Math.sqrt(Math.pow(Math.abs(this.p1.getX() - this.p2.getX()), 2) + Math.pow(Math.abs(this.p1.getY() - this.p2.getY()), 2));
+        return Math.sqrt(Math.pow(Math.abs(this.p1.getX() - this.p2.getX()), 2)
+                + Math.pow(Math.abs(this.p1.getY() - this.p2.getY()), 2));
     }
 
     public double getDoDoc() {
@@ -138,7 +140,7 @@ class Main {
             int p2X = Integer.parseInt(options[3]);
             int p2Y = Integer.parseInt(options[4]);
 
-            String result = "";
+            String result = ""; 
 
             if (options[0].equals("CPoint")) {
                 Line ln = new Line(new Point(p1X, p1Y), new Point(p2X, p2Y));
